@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity() {
             updateTextViewsForGameLogic(gameLogic)
         }
 
+        binding.buttonRestart.setOnClickListener()
+        {
+            gameLogic.onRestart()
+            updateTextViewsForGameLogic(gameLogic)
+        }
+
         updateTextViewsForGameLogic(gameLogic)
         setContentView(binding.root)
     }

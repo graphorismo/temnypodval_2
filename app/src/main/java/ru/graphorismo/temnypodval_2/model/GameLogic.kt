@@ -10,7 +10,7 @@ class GameLogic()
     private var player: PlayerEntity = PlayerEntity(0,100, 0)
 
     init {
-        generateNewRoomWithDifficulty(1)
+        onRestart()
     }
 
     fun onInteraction()
@@ -92,6 +92,11 @@ class GameLogic()
 
     fun getPlayer(): PlayerEntity {
         return player
+    }
+
+    fun onRestart() {
+        player = PlayerEntity(0, 100, 0)
+        generateNewRoomWithDifficulty(1);
     }
 
 }
