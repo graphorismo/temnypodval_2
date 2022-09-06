@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout_fragmentMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentMain_fragmentContainerViewInfo"
+        android:name="ru.graphorismo.temnypodval_2.InfoFragment"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentMain_fragmentContainerViewPicture"
+        android:name="ru.graphorismo.temnypodval_2.PictureFragment"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentMain_fragmentContainerViewInfo"
+        app:layout_constraintStart_toStartOf="@+id/fragmentMain_fragmentContainerViewInfo"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentMain_fragmentContainerViewInfo" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentMain_fragmentContainerViewButtons"
+        android:name="ru.graphorismo.temnypodval_2.ButtonsFragment"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentMain_fragmentContainerViewPicture"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fragmentMain_fragmentContainerViewPicture"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentMain_fragmentContainerViewPicture" />
+</androidx.constraintlayout.widget.ConstraintLayout>
