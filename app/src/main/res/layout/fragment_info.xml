@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout_FragmentInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InfoFragment">
+    tools:context=".InfoFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/fragmentInfo_textViewPlayerMain"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/fragmentInfo_textViewPlayerSupp"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentInfo_textViewPlayerMain"
+        app:layout_constraintStart_toStartOf="@+id/fragmentInfo_textViewPlayerMain"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentInfo_textViewPlayerMain" />
+
+    <TextView
+        android:id="@+id/fragmentInfo_textViewEntityMain"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentInfo_textViewPlayerSupp"
+        app:layout_constraintStart_toStartOf="@+id/fragmentInfo_textViewPlayerSupp"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentInfo_textViewPlayerSupp" />
+
+    <TextView
+        android:id="@+id/fragmentInfo_textViewEntitySupp"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentInfo_textViewEntityMain"
+        app:layout_constraintStart_toStartOf="@+id/fragmentInfo_textViewEntityMain"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentInfo_textViewEntityMain" />
+</androidx.constraintlayout.widget.ConstraintLayout>
