@@ -6,4 +6,5 @@
     <string name="button_interact">INTERACT</string>
     <string name="button_prev">PREV</string>
     <string name="button_next">NEXT</string>
+    <string name="button_restart">RESTART</string>
 </resources>
