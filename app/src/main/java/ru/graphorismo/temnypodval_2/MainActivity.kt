@@ -45,5 +45,9 @@ class MainActivity : AppCompatActivity() {
         binding.imageViewEntity.setImageResource(entity.imageId)
         binding.textViewMain.setText(entity.getMainInfo())
         binding.textViewSupport.setText(entity.getSupportInfo())
+
+        var player = logic.getPlayer()
+        binding.textViewPlayerMainInfo.setText(player.getMainInfo())
+        binding.textViewPlayerSupportInfo.setText(player.getSupportInfo())
     }
 }

@@ -90,4 +90,8 @@ class GameLogic()
         entityIDInStack = entitiesInRoom[stackIDInRoom].size-1
     }
 
+    fun getPlayer(): PlayerEntity {
+        return player
+    }
+
 }
