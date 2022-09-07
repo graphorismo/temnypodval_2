@@ -16,44 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        var gameLogic = viewModel.gameLogic
-
-        binding.buttonInteract.setOnClickListener()
-        {
-            gameLogic.onInteraction()
-            updateTextViewsForGameLogic(gameLogic)
-        }
-
-        binding.buttonNext.setOnClickListener(){
-            gameLogic.onSwitchNext()
-            updateTextViewsForGameLogic(gameLogic)
-        }
-
-        binding.buttonPrev.setOnClickListener()
-        {
-            gameLogic.onSwitchPrev()
-            updateTextViewsForGameLogic(gameLogic)
-        }
-
-        binding.buttonRestart.setOnClickListener()
-        {
-            gameLogic.onRestart()
-            updateTextViewsForGameLogic(gameLogic)
-        }
-
-        updateTextViewsForGameLogic(gameLogic)
         setContentView(binding.root)
     }
 
-    fun updateTextViewsForGameLogic(logic: GameLogic)
-    {
-        var entity : AEntity = logic.getCurrentEntity()
-        binding.imageViewEntity.setImageResource(entity.imageId)
-        binding.textViewMain.setText(entity.getMainInfo())
-        binding.textViewSupport.setText(entity.getSupportInfo())
-
-        var player = logic.getPlayer()
-        binding.textViewPlayerMainInfo.setText(player.getMainInfo())
-        binding.textViewPlayerSupportInfo.setText(player.getSupportInfo())
-    }
 }
