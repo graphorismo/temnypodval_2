@@ -10,17 +10,17 @@
     <TextView
         android:id="@+id/fragmentInfo_textViewPlayerMain"
         android:layout_width="140dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintHorizontal_bias="0.014"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/fragmentInfo_textViewPlayerSupp"
         android:layout_width="140dp"
-        android:layout_height="40dp"
+        android:layout_height="20dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/fragmentInfo_textViewPlayerMain"
         app:layout_constraintStart_toStartOf="@+id/fragmentInfo_textViewPlayerMain"
@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/fragmentInfo_textViewEntityMain"
         android:layout_width="140dp"
-        android:layout_height="40dp"
+        android:layout_height="20dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/fragmentInfo_textViewPlayerSupp"
         app:layout_constraintStart_toStartOf="@+id/fragmentInfo_textViewPlayerSupp"
@@ -38,7 +38,7 @@
     <TextView
         android:id="@+id/fragmentInfo_textViewEntitySupp"
         android:layout_width="140dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/fragmentInfo_textViewEntityMain"
         app:layout_constraintStart_toStartOf="@+id/fragmentInfo_textViewEntityMain"
