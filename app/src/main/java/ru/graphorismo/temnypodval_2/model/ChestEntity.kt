@@ -8,4 +8,8 @@ class ChestEntity(var healthRestore: Int, imageId: Int) : AEntity(imageId) {
     override fun getSupportInfo(): String {
         return "CHEST WILL RESTORE YOUR HEALTH"
     }
+
+    override fun clone(): AEntity {
+        return ChestEntity(healthRestore, imageId)
+    }
 }

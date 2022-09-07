@@ -8,4 +8,8 @@ class DoorEntity(var difficult: Int, imageId: Int) : AEntity(imageId) {
     override fun getSupportInfo(): String {
         return "DOOR WILL CHANGE A ROOM"
     }
+
+    override fun clone(): AEntity {
+        return DoorEntity(difficult, imageId)
+    }
 }

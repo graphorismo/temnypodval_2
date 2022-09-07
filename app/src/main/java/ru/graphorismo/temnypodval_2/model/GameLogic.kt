@@ -9,9 +9,30 @@ class GameLogic()
     private var entityIDInStack = 0
     private var player: PlayerEntity = PlayerEntity(0,100, 0)
 
+    private var observersOfPlayerData = mutableListOf<IPlayerDataObserver>()
+    private var observersOfEntityData = mutableListOf<IEntityDataObserver>()
+
+
+    interface IPlayerDataObserver{
+        fun onPlayerDataChange(newPlayerData: PlayerEntity)
+    }
+
+    interface IEntityDataObserver{
+        fun onEntityDataChange(newEntityData: AEntity)
+    }
+
     init {
         onRestart()
     }
+
+    fun addPlayerDataObserver(observer: IPlayerDataObserver) = observersOfPlayerData.add(observer)
+    private fun runPlayerDataObservers() = observersOfPlayerData.forEach() {it.onPlayerDataChange(getPlayerData())}
+    fun removePlayerDataObserver(observer: IPlayerDataObserver) = observersOfPlayerData.remove(observer)
+
+    fun addEntityDataObserver(observer: IEntityDataObserver) = observersOfEntityData.add(observer)
+    private fun runEntityDataObservers() = observersOfEntityData.forEach() {it.onEntityDataChange(getCurrentEntityData())}
+    fun removeEntityDataObserver(observer: IEntityDataObserver) = observersOfEntityData.remove(observer)
+
 
     fun onInteraction()
     {
@@ -28,6 +49,7 @@ class GameLogic()
 
     private fun useChest(chest: ChestEntity) {
         player.health+=chest.healthRestore
+        runPlayerDataObservers()
         entitiesInRoom[stackIDInRoom].remove(chest)
         onSwitchNext()
     }
@@ -41,6 +63,7 @@ class GameLogic()
 
     private fun handlePlayerDeath() {
         player = PlayerEntity(0,100,0)
+        runPlayerDataObservers()
         generateNewRoomWithDifficulty(1)
     }
 
@@ -51,6 +74,7 @@ class GameLogic()
                 it.remove(monster)
         }
         entityIDInStack = entitiesInRoom[stackIDInRoom].size-1
+        runEntityDataObservers()
     }
 
     private fun generateNewRoomWithDifficulty(difficult: Int) {
@@ -69,10 +93,11 @@ class GameLogic()
         }
         stackIDInRoom=0
         entityIDInStack = entitiesInRoom[stackIDInRoom].size-1
+        runEntityDataObservers()
     }
 
-    fun getCurrentEntity(): AEntity {
-        return entitiesInRoom[stackIDInRoom][entityIDInStack]
+    fun getCurrentEntityData(): AEntity {
+        return entitiesInRoom[stackIDInRoom][entityIDInStack].clone()
     }
 
     fun onSwitchNext() {
@@ -80,6 +105,7 @@ class GameLogic()
         var roomIsOver: Boolean = stackIDInRoom>=entitiesInRoom.size
         if (roomIsOver) stackIDInRoom = 0
         entityIDInStack = entitiesInRoom[stackIDInRoom].size-1
+        runEntityDataObservers()
 
     }
 
@@ -88,14 +114,16 @@ class GameLogic()
         var roomIsOver: Boolean = stackIDInRoom<0
         if (roomIsOver) stackIDInRoom = entitiesInRoom.size-1
         entityIDInStack = entitiesInRoom[stackIDInRoom].size-1
+        runEntityDataObservers()
     }
 
-    fun getPlayer(): PlayerEntity {
-        return player
+    fun getPlayerData(): PlayerEntity {
+        return player.clone() as PlayerEntity
     }
 
     fun onRestart() {
         player = PlayerEntity(0, 100, 0)
+        runPlayerDataObservers()
         generateNewRoomWithDifficulty(1);
     }
 

@@ -4,4 +4,8 @@ class MonsterEntity(var name: String, health: Int, imageId: Int): AliveEntity(he
     override fun getSupportInfo(): String {
         return "THATS ${name}! THIS MONSTER WILL HIT YOU"
     }
+
+    override fun clone(): AEntity {
+        return MonsterEntity(name, health, imageId)
+    }
 }
