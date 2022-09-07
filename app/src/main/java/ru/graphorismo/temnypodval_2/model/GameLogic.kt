@@ -56,7 +56,9 @@ class GameLogic()
 
     private fun makePlayerAndMonsterHitEachOther(monster: MonsterEntity) {
             player.health -= monster.health/10
+            runPlayerDataObservers()
             monster.health -= player.health/10
+            runEntityDataObservers()
             if (monster.health <= 0) handleMonsterDeath(monster)
             if (player.health <= 0) handlePlayerDeath()
     }
@@ -69,6 +71,7 @@ class GameLogic()
 
     private fun handleMonsterDeath(monster: AEntity) {
         player.score += 1
+        runPlayerDataObservers()
         entitiesInRoom.forEach {
             if (it.contains(monster))
                 it.remove(monster)
