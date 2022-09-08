@@ -11,6 +11,10 @@ import ru.graphorismo.temnypodval_2.databinding.FragmentButtonsBinding
 
 class ButtonsFragment : Fragment() {
 
+    interface ICallbacks{
+        fun onMenuFragmentOpen()
+    }
+
     private var _binding: FragmentButtonsBinding? = null
     // This property is only valid between onCreateView and
 // onDestroyView.
@@ -34,7 +38,10 @@ class ButtonsFragment : Fragment() {
         binding.fragmentButtonsButtonNext.setOnClickListener() {viewModel.gameLogic.onSwitchNext()}
         binding.fragmentButtonsButtonPrev.setOnClickListener() {viewModel.gameLogic.onSwitchPrev()}
         binding.fragmentButtonsButtonInteract.setOnClickListener() {viewModel.gameLogic.onInteraction()}
-        binding.fragmentButtonsButtonRestart.setOnClickListener() {viewModel.gameLogic.onRestart()}
+        binding.fragmentButtonsButtonMenu.setOnClickListener() {
+            var callbacks = activity as ICallbacks
+            callbacks.onMenuFragmentOpen()
+        }
     }
 
     override fun onDestroyView() {
