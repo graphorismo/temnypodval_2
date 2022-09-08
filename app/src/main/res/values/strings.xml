@@ -7,8 +7,8 @@
     <string name="button_prev">PREV</string>
     <string name="button_next">NEXT</string>
     <string name="button_restart">RESTART</string>
-    <string name="fragmentButtons_buttonInteract">INTERACT</string>
-    <string name="fragmentButtons_buttonRestart">RESTART</string>
+    <string name="fragmentButtons_buttonInteract">ACT</string>
+    <string name="fragmentButtons_buttonMenu">MENU</string>
     <string name="fragmentButtons_buttonNext">NEXT</string>
     <string name="fragmentButtons_buttonPrev">PREV</string>
     <string name="fragmentMenu_buttonExit">EXIT</string>
