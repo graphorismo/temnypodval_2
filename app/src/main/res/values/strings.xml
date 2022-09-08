@@ -15,4 +15,5 @@
     <string name="fragmentMenu_buttonLoad">LOAD</string>
     <string name="fragmentMenu_buttonSave">SAVE</string>
     <string name="fragmentMenu_buttonResume">RESUME</string>
+    <string name="fragmentButtons_buttonRestart">RESTART</string>
 </resources>

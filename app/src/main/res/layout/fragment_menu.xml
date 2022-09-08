@@ -25,9 +25,9 @@
         android:layout_marginTop="12dp"
         android:text="@string/fragmentMenu_buttonSave"
         app:layout_constraintEnd_toEndOf="@+id/fragmentMenu_buttonResume"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/fragmentMenu_buttonResume"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentMenu_buttonResume" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentButtons_buttonRestart" />
 
     <Button
         android:id="@+id/fragmentMenu_buttonLoad"
@@ -50,4 +50,15 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/fragmentMenu_buttonLoad"
         app:layout_constraintTop_toBottomOf="@+id/fragmentMenu_buttonLoad" />
+
+    <Button
+        android:id="@+id/fragmentButtons_buttonRestart"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/fragmentButtons_buttonRestart"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentMenu_buttonResume"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fragmentMenu_buttonResume"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentMenu_buttonResume" />
 </androidx.constraintlayout.widget.ConstraintLayout>
