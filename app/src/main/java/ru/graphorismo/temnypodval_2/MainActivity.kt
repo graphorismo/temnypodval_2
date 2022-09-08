@@ -7,7 +7,9 @@ import ru.graphorismo.temnypodval_2.databinding.ActivityMainBinding
 import ru.graphorismo.temnypodval_2.model.AEntity
 import ru.graphorismo.temnypodval_2.model.GameLogic
 
-class MainActivity : AppCompatActivity(), ButtonsFragment.ICallbacks {
+class MainActivity : AppCompatActivity(),
+    ButtonsFragment.ICallbacks,
+    MenuFragment.ICallbacks{
 
     private val viewModel : MainActivityViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
@@ -24,6 +26,14 @@ class MainActivity : AppCompatActivity(), ButtonsFragment.ICallbacks {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.activityMain_fragmentContainerViewMain, menuFragment)
+            .commit()
+    }
+
+    override fun onMenuFragmentClose() {
+        val mainFragment = MainFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.activityMain_fragmentContainerViewMain, mainFragment)
             .commit()
     }
 
