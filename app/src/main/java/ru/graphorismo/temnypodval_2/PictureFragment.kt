@@ -27,6 +27,7 @@ class PictureFragment : Fragment(), GameLogic.IEntityDataObserver {
         _binding = FragmentPictureBinding.inflate(inflater, container, false)
 
         viewModel.gameLogic.addEntityDataObserver(this)
+        viewModel.gameLogic.updateObserversData()
 
         return binding.root
 

@@ -30,6 +30,7 @@ class InfoFragment : Fragment(), GameLogic.IEntityDataObserver, GameLogic.IPlaye
 
         viewModel.gameLogic.addEntityDataObserver(this)
         viewModel.gameLogic.addPlayerDataObserver(this)
+        viewModel.gameLogic.updateObserversData()
 
         return binding.root
 

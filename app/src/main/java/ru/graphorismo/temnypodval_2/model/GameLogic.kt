@@ -130,4 +130,9 @@ class GameLogic()
         generateNewRoomWithDifficulty(1);
     }
 
+    fun updateObserversData(){
+        runPlayerDataObservers()
+        runEntityDataObservers()
+    }
+
 }
