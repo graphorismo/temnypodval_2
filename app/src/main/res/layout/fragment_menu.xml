@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuFragment" >
+
+    <Button
+        android:id="@+id/fragmentMenu_buttonResume"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fragmentMenu_buttonResume"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.417"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/fragmentMenu_buttonSave"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/fragmentMenu_buttonSave"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentMenu_buttonResume"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/fragmentMenu_buttonResume"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentMenu_buttonResume" />
+
+    <Button
+        android:id="@+id/fragmentMenu_buttonLoad"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/fragmentMenu_buttonLoad"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentMenu_buttonSave"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fragmentMenu_buttonSave"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentMenu_buttonSave" />
+
+    <Button
+        android:id="@+id/fragmentMenu_buttonExit"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/fragmentMenu_buttonExit"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentMenu_buttonLoad"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fragmentMenu_buttonLoad"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentMenu_buttonLoad" />
+</androidx.constraintlayout.widget.ConstraintLayout>

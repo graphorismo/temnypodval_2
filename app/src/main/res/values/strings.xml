@@ -11,4 +11,8 @@
     <string name="fragmentButtons_buttonRestart">RESTART</string>
     <string name="fragmentButtons_buttonNext">NEXT</string>
     <string name="fragmentButtons_buttonPrev">PREV</string>
+    <string name="fragmentMenu_buttonExit">EXIT</string>
+    <string name="fragmentMenu_buttonLoad">LOAD</string>
+    <string name="fragmentMenu_buttonSave">SAVE</string>
+    <string name="fragmentMenu_buttonResume">RESUME</string>
 </resources>
