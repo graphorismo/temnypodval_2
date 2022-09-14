@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.graphorismo.temnypodval_2.databinding.FragmentMenuBinding
 import kotlin.system.exitProcess
 
@@ -23,6 +26,8 @@ class MenuFragment : Fragment() {
 
     private val viewModel: MainActivityViewModel by activityViewModels()
 
+    lateinit var callbacks: ICallbacks
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,19 +41,31 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        callbacks = activity as ICallbacks
+
         binding.fragmentMenuButtonResume.setOnClickListener() {
-            var callbacks = activity as ICallbacks
             callbacks.onMenuFragmentClose()
         }
 
         binding.fragmentButtonsButtonRestart.setOnClickListener() {
             viewModel.gameLogic.onRestart()
-            var callbacks = activity as ICallbacks
             callbacks.onMenuFragmentClose()
         }
 
         binding.fragmentMenuButtonExit.setOnClickListener(){
             exitProcess(0)
+        }
+
+        binding.fragmentMenuButtonSave.setOnClickListener(){
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.gameLogic.saveToDB()
+            }
+        }
+
+        binding.fragmentMenuButtonLoad.setOnClickListener(){
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.gameLogic.loadFromDB()
+            }
         }
     }
 

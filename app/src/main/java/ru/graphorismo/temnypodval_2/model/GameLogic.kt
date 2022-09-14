@@ -3,10 +3,11 @@ package ru.graphorismo.temnypodval_2.model
 import ru.graphorismo.temnypodval_2.R
 import ru.graphorismo.temnypodval_2.model.data.EntityData
 import ru.graphorismo.temnypodval_2.model.data.EntityType
+import ru.graphorismo.temnypodval_2.model.data.PodvalRepository
 
 class GameLogic()
 {
-    private lateinit var entitiesInRoom: MutableList<MutableList<AEntity>>
+    private lateinit var entitiesInRoom: MutableList<MutableList<AEntity?>>
     private var stackIDInRoom = 0
     private var entityIDInStack = 0
     private var player: PlayerEntity = PlayerEntity(0,100, 0)
@@ -83,14 +84,14 @@ class GameLogic()
     }
 
     private fun generateNewRoomWithDifficulty(difficult: Int) {
-        entitiesInRoom = mutableListOf<MutableList<AEntity>>()
-        entitiesInRoom.add(mutableListOf<AEntity>())
+        entitiesInRoom = mutableListOf<MutableList<AEntity?>>()
+        entitiesInRoom.add(mutableListOf<AEntity?>())
         entitiesInRoom[0].add(DoorEntity(difficult+1, R.drawable.door))
         for (i in 0 until difficult+1){
             entitiesInRoom[0].add(MonsterEntity("Monster $i", 50*difficult, R.drawable.skeleton))
         }
         for (i in 1 until difficult+3){
-            entitiesInRoom.add(mutableListOf<AEntity>())
+            entitiesInRoom.add(mutableListOf<AEntity?>())
             entitiesInRoom[i].add(ChestEntity(difficult*100,R.drawable.chest))
             for (j in 0 until difficult+1){
                 entitiesInRoom[i].add(MonsterEntity("Monster $i$j", 50*difficult, R.drawable.skeleton))
@@ -102,10 +103,13 @@ class GameLogic()
     }
 
     fun getCurrentEntityData(): AEntity {
-        return entitiesInRoom[stackIDInRoom][entityIDInStack].clone()
+        return entitiesInRoom[stackIDInRoom][entityIDInStack]?.clone() ?:
+            throw Exception("Current entitty cant be a null")
     }
 
     fun onSwitchNext() {
+        if (entitiesInRoom.size == 0)
+            throw Exception("Room cant be empty")
         stackIDInRoom+=1
         var roomIsOver: Boolean = stackIDInRoom>=entitiesInRoom.size
         if (roomIsOver) stackIDInRoom = 0
@@ -115,6 +119,8 @@ class GameLogic()
     }
 
     fun onSwitchPrev() {
+        if (entitiesInRoom.size == 0)
+            throw Exception("Room cant be empty")
         stackIDInRoom-=1
         var roomIsOver: Boolean = stackIDInRoom<0
         if (roomIsOver) stackIDInRoom = entitiesInRoom.size-1
@@ -137,7 +143,7 @@ class GameLogic()
         runEntityDataObservers()
     }
 
-    suspend fun convertDataToDataBaseReadyFormat(): MutableList<EntityData>{
+    fun convertDataToDataBaseReadyFormat(): MutableList<EntityData>{
         var convertedData = mutableListOf<EntityData>()
         convertedData.add(
             EntityData(
@@ -188,11 +194,16 @@ class GameLogic()
         return convertedData
     }
 
-    suspend fun loadFromDataBaseData(data: MutableList<EntityData>){
+    fun loadFromDataBaseData(data: MutableList<EntityData>){
         entitiesInRoom.clear()
         data.forEach(){
             if (it.type==EntityType.PLAYER.value){
-                player = PlayerEntity(it.score,it.health)
+                player =
+                    PlayerEntity(
+                        score=it.score,
+                        health=it.health,
+                        imageId = 0
+                    )
                 runPlayerDataObservers()
             }
             else if (it.type==EntityType.DOOR.value){
@@ -200,16 +211,16 @@ class GameLogic()
                     DoorEntity(
                         difficult = it.difficulty,
                         imageId = it.pictureId)
-                entitiesInRoom.add(it.stackId, mutableListOf<AEntity>())
-                entitiesInRoom[it.stackId].add(it.positionId, door)
+                extendEntitiesToPosition(it.stackId, it.positionId)
+                entitiesInRoom[it.stackId][it.positionId]=door
             }
             else if (it.type==EntityType.CHEST.value){
                 var chest =
                     ChestEntity(
                         healthRestore = it.restoration,
                         imageId = it.pictureId)
-                entitiesInRoom.add(it.stackId, mutableListOf<AEntity>())
-                entitiesInRoom[it.stackId].add(it.positionId, chest)
+                extendEntitiesToPosition(it.stackId, it.positionId)
+                entitiesInRoom[it.stackId][it.positionId]=chest
             }
             else if (it.type==EntityType.MONSTER.value){
                 var monster =
@@ -217,11 +228,37 @@ class GameLogic()
                         name=it.name,
                         health = it.health,
                         imageId = it.pictureId)
-                entitiesInRoom.add(it.stackId, mutableListOf<AEntity>())
-                entitiesInRoom[it.stackId].add(it.positionId, monster)
+                extendEntitiesToPosition(it.stackId, it.positionId)
+                entitiesInRoom[it.stackId][it.positionId]= monster
             }
-            onSwitchNext()
         }
+        onSwitchNext()
+        onSwitchPrev()
+    }
+
+    fun extendEntitiesToPosition(stackid: Int, posid: Int){
+        val numberOfStacks = stackid+1 -  entitiesInRoom.size
+        if (numberOfStacks>0)
+            repeat(numberOfStacks){
+                entitiesInRoom.add(mutableListOf())
+            }
+        val numberOfPos = posid+1 - entitiesInRoom[stackid].size
+        if (numberOfPos > 0)
+            repeat(numberOfPos){
+                entitiesInRoom[stackid].add(null)
+            }
+
+    }
+
+    suspend fun saveToDB() {
+        PodvalRepository.get().deleteAll()
+        var data = this.convertDataToDataBaseReadyFormat()
+        PodvalRepository.get().insertAll(data)
+    }
+
+    suspend fun loadFromDB() {
+        var data = PodvalRepository.get().getAll()
+        this.loadFromDataBaseData(data as MutableList<EntityData>)
     }
 
 }
