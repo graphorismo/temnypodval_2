@@ -1,6 +1,8 @@
 package ru.graphorismo.temnypodval_2.model
 
 import ru.graphorismo.temnypodval_2.R
+import ru.graphorismo.temnypodval_2.model.data.EntityData
+import ru.graphorismo.temnypodval_2.model.data.EntityType
 
 class GameLogic()
 {
@@ -133,6 +135,93 @@ class GameLogic()
     fun updateObserversData(){
         runPlayerDataObservers()
         runEntityDataObservers()
+    }
+
+    suspend fun convertDataToDataBaseReadyFormat(): MutableList<EntityData>{
+        var convertedData = mutableListOf<EntityData>()
+        convertedData.add(
+            EntityData(
+                type = EntityType.PLAYER.value,
+                health = player.health,
+                score = player.score
+            )
+        )
+        entitiesInRoom.forEach(){ stack ->
+            stack.forEach(){
+                if(it is ChestEntity){
+                    convertedData.add(
+                        EntityData(
+                            type = EntityType.CHEST.value,
+                            restoration = it.healthRestore,
+                            pictureId = it.imageId,
+                            stackId = entitiesInRoom.indexOf(stack),
+                            positionId = stack.indexOf(it)
+                        )
+                    )
+                }
+                else if (it is DoorEntity){
+                    convertedData.add(
+                        EntityData(
+                            type = EntityType.DOOR.value,
+                            difficulty = it.difficult,
+                            pictureId = it.imageId,
+                            stackId = entitiesInRoom.indexOf(stack),
+                            positionId = stack.indexOf(it)
+                        )
+                    )
+                }
+                else if (it is MonsterEntity){
+                    convertedData.add(
+                        EntityData(
+                            type = EntityType.MONSTER.value,
+                            name = it.name,
+                            health = it.health,
+                            pictureId = it.imageId,
+                            stackId = entitiesInRoom.indexOf(stack),
+                            positionId = stack.indexOf(it)
+                        )
+                    )
+                }
+            }
+
+        }
+        return convertedData
+    }
+
+    suspend fun loadFromDataBaseData(data: MutableList<EntityData>){
+        entitiesInRoom.clear()
+        data.forEach(){
+            if (it.type==EntityType.PLAYER.value){
+                player = PlayerEntity(it.score,it.health)
+                runPlayerDataObservers()
+            }
+            else if (it.type==EntityType.DOOR.value){
+                var door =
+                    DoorEntity(
+                        difficult = it.difficulty,
+                        imageId = it.pictureId)
+                entitiesInRoom.add(it.stackId, mutableListOf<AEntity>())
+                entitiesInRoom[it.stackId].add(it.positionId, door)
+            }
+            else if (it.type==EntityType.CHEST.value){
+                var chest =
+                    ChestEntity(
+                        healthRestore = it.restoration,
+                        imageId = it.pictureId)
+                entitiesInRoom.add(it.stackId, mutableListOf<AEntity>())
+                entitiesInRoom[it.stackId].add(it.positionId, chest)
+            }
+            else if (it.type==EntityType.MONSTER.value){
+                var monster =
+                    MonsterEntity(
+                        name=it.name,
+                        health = it.health,
+                        imageId = it.pictureId)
+                entitiesInRoom.add(it.stackId, mutableListOf<AEntity>())
+                entitiesInRoom[it.stackId].add(it.positionId, monster)
+            }
+            onSwitchNext()
+        }
     }
 
 }
