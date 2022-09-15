@@ -17,6 +17,8 @@ class MenuFragment : Fragment() {
 
     interface ICallbacks{
         fun onMenuFragmentClose()
+        fun onLoadButtonClick()
+        fun onSaveButtonClick()
     }
 
     private var _binding: FragmentMenuBinding? = null
@@ -57,15 +59,11 @@ class MenuFragment : Fragment() {
         }
 
         binding.fragmentMenuButtonSave.setOnClickListener(){
-            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                viewModel.gameLogic.saveToDB()
-            }
+            callbacks.onSaveButtonClick()
         }
 
         binding.fragmentMenuButtonLoad.setOnClickListener(){
-            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                viewModel.gameLogic.loadFromDB()
-            }
+            callbacks.onLoadButtonClick()
         }
     }
 

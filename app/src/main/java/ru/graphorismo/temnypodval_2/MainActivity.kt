@@ -3,6 +3,9 @@ package ru.graphorismo.temnypodval_2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.graphorismo.temnypodval_2.databinding.ActivityMainBinding
 import ru.graphorismo.temnypodval_2.model.AEntity
 import ru.graphorismo.temnypodval_2.model.GameLogic
@@ -35,6 +38,44 @@ class MainActivity : AppCompatActivity(),
             .beginTransaction()
             .replace(R.id.activityMain_fragmentContainerViewMain, mainFragment)
             .commit()
+    }
+
+    override fun onLoadButtonClick() {
+        var loadScreenFragment = LoadScreenFragment.newInstance("Loading")
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.activityMain_fragmentContainerViewMain, loadScreenFragment)
+            .commit()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.gameLogic.loadFromDB()
+
+            val mainFragment = MainFragment()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.activityMain_fragmentContainerViewMain, mainFragment)
+                .commit()
+        }
+    }
+
+    override fun onSaveButtonClick() {
+        var loadScreenFragment = LoadScreenFragment.newInstance("Saving")
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.activityMain_fragmentContainerViewMain, loadScreenFragment)
+            .commit()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.gameLogic.saveToDB()
+
+            val mainFragment = MainFragment()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.activityMain_fragmentContainerViewMain, mainFragment)
+                .commit()
+        }
+
+
     }
 
 }
